@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Fraud Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Insurance Fraud Detection</h1>
+            <p>Advanced Machine Learning for Claim Verification</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="#about">About</a>
+            <a href="#scenarios">Scenarios</a>
+            <a href="#predict">Predict Claim</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section id="about">
+            <h2>About the Project</h2>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p>Detecting fraudulent insurance claims is a critical task for financial stability. Our system leverages trained 
+                Decision Tree and Logistic Regression models to identify high-risk patterns instantly.</p>
+            </div>
+        </section>
+
+        <section id="scenarios">
+            <h2>Fraud Scenarios</h2>
+            <div class="card-container">
+                <div class="card">
+                    <h3>🚗 Automobile</h3>
+                    <p>Flags suspicious damage reports and high-frequency claimants.</p>
+                </div>
+                <div class="card">
+                    <h3>🏥 Health</h3>
+                    <p>Detects duplicate billing and unauthorized medical procedure codes.</p>
+                </div>
+                <div class="card">
+                    <h3>🏠 Property</h3>
+                    <p>Analyzes claim timing versus policy purchase dates to flag intent.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="predict">
+            <h2>Start Prediction</h2>
+            <div class="predict-container">
+                <form action="/predict" method="POST">
+                    <label for="amount">Total Claim Amount ($)</label>
+                    <input type="number" id="amount" name="amount" placeholder="e.g., 5000" required>
+
+                    <label for="history">Claim History (Count)</label>
+                    <input type="number" id="history" name="history" placeholder="e.g., 2" required>
+
+                    <label for="type">Insurance Domain</label>
+                    <select id="type" name="type" required>
+                        <option value="" disabled selected>Choose insurance type</option>
+                        <option value="0">Automobile</option>
+                        <option value="1">Health</option>
+                        <option value="2">Property</option>
+                    </select>
+
+                    <button type="submit">Analyze Claim Now</button>
+                </form>
+
+                {% if prediction_text %}
+                    <div class="prediction-result {% if 'Fraud' in prediction_text %}result-fraud{% else %}result-genuine{% endif %}">
+                        <h3>{{ prediction_text }}</h3>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2026 AI Insurance Solutions | Powered by Machine Learning</p>
+    </footer>
+
+</body>
+</html>
